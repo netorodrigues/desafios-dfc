@@ -16,17 +16,19 @@ const connection = mysql.createConnection(config);
 app.get('/', (req, res) =>{
     var message = "<h1>Hello, express!</h1> </br> </br>";
     const sql = "SELECT name FROM people;";
+    
     connection.query(sql,  function (error, results, fields) {
         if (error) throw error;
-        results.forEach(element => {
-            message += `<h2>${element.name}</h2></br>`;
-        });
+        
+        if (results){
+            results.forEach(element => {
+                message += `<h2>${element.name}</h2></br>`;
+            });
+        }
         
         res.send(message);
     });
     
-    
-    connection.end();
 });
 
 
